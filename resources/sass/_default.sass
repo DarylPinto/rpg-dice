@@ -1,0 +1,53 @@
+//Reset
+
+*
+	margin: 0
+	padding: 0
+
+ul
+	font-size: 0
+li
+	font-size: 14px
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+	-webkit-appearance: none
+	margin: 0
+
+//Utilities
+
+.clearfix
+	clear: both
+
+//Mixins
+
+=grayscale
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale")
+	-webkit-filter: grayscale(100%)
+	-moz-filter: grayscale(100%)
+	-ms-filter: grayscale(100%)
+	-o-filter: grayscale(100%)
+	filter: grayscale(100%)
+
+=v($name, $argument)
+	-webkit-#{$name}: #{$argument}
+	-moz-#{$name}: #{$argument}
+	-ms-#{$name}: #{$argument}
+	-o-#{$name}: #{$argument}
+	#{$name}: #{$argument}
+
+=vendor($name, $argument)
+	-webkit-#{$name}: #{$argument}
+	-moz-#{$name}: #{$argument}
+	-ms-#{$name}: #{$argument}
+	-o-#{$name}: #{$argument}
+	#{$name}: #{$argument}
+
+=background-gradient($color1, $color2)
+	background: #{$color1}
+	background: -moz-linear-gradient(top,  #{$color1} 0%, #{$color2} 100%)
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#{$color1}), color-stop(100%,#{$color2}))
+	background: -webkit-linear-gradient(top,  #{$color1} 0%,#{$color2} 100%)
+	background: -o-linear-gradient(top,  #{$color1} 0%,#{$color2} 100%)
+	background: -ms-linear-gradient(top,  #{$color1} 0%,#{$color2} 100%)
+	background: linear-gradient(to bottom,  #{$color1} 0%,#{$color2} 100%)
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{$color1}', endColorstr='#{$color2}',GradientType=0 )
