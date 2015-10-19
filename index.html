@@ -38,24 +38,28 @@
 			<div class="pure-g controls">
 				<div class="pure-u-1-4">
 					<label for="dice-amount">Dice</label>
-					<input type="number" id="dice-amount" class="dice-input" value="1">
+					<input type="tel" id="dice-amount" class="dice-input" value="1">
 				</div>
 				<div class="pure-u-1-4">
 					<label for="faces-amount">Faces</label>
-					<input type="number" id="faces-amount" class="dice-input" value="20">
+					<input type="tel" id="faces-amount" class="dice-input" value="20">
 				</div>
 				<div class="pure-u-1-4">
 					<label for="modifier">Modifier</label>
-					<input type="number" id="modifier" class="dice-input" value="0">
+					<input type="tel" id="modifier" class="dice-input" value="0">
 				</div>
 				<div class="pure-u-1-4">
-					<button id="roll-dice">Roll</button>
+					<button id="roll-dice-button">Roll</button>
 				</div>
 			</div>
 		</div>
 		<div class="pure-g results">
-			<div class="pure-u-1-2">a</div>
-			<div class="pure-u-1-2">a</div>
+			<div class="pure-u-1-2 individual-rolls">
+				<h1>Rolled <span>X</span></h1>
+			</div>
+			<div class="pure-u-1-2 total">
+				<h1>Result</h1>
+			</div>
 		</div>
 	</main>
 
