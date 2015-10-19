@@ -1,4 +1,7 @@
 var roll_history = [];
+var roll_speed = 300;
+var currently_rolling = false;
+var roll;
 
 function rollData(dice_amount, faces_amount, individual_rolls, modifier, mod_type, result){
 	this.dice_amount = dice_amount;
@@ -60,50 +63,55 @@ function cleanFields(){
 
 function rollDice(){
 
-	var mod_type = 1;
+	if(!currently_rolling){ //Prevent spam rolling
 
-	cleanFields();
+		var mod_type = 1;
 
-	//Set variables
-	var dice_amount = parseInt($('#dice-amount').val());
-	var faces_amount = parseInt($('#faces-amount').val());
-	var modifier = parseInt($('#modifier').val());
-	var individual_rolls = [];
-	var result = 0;
+		cleanFields();
 
-	//Create array that contains the roll of each individual die
-	for(var i = 0;i < dice_amount;i++){
-		individual_rolls.push( randomNumberBetween(0,faces_amount) );
+		//Set variables
+		var dice_amount = parseInt($('#dice-amount').val());
+		var faces_amount = parseInt($('#faces-amount').val());
+		var modifier = parseInt($('#modifier').val());
+		var individual_rolls = [];
+		var result = 0;
+
+		//Create array that contains the roll of each individual die
+		for(var i = 0;i < dice_amount;i++){
+			individual_rolls.push( randomNumberBetween(0,faces_amount) );
+		}
+
+		//Add individual rolls to get result
+		individual_rolls.forEach(function(number){
+			result += number;
+		});
+
+		//Add modifier
+		if(mod_type === 1){
+			result += modifier;
+		}else if(mod_type === 2){
+			result += modifier * dice_amount;
+		}
+
+		//Add roll data to history
+		var currentRoll = new rollData();
+		currentRoll.dice_amount = dice_amount;
+		currentRoll.faces_amount = faces_amount;
+		currentRoll.individual_rolls = individual_rolls;
+		currentRoll.modifier = modifier;
+		currentRoll.mod_type = mod_type;
+		currentRoll.result = result;
+
+		roll_history.push(currentRoll);
+		roll = roll_history[roll_history.length - 1];
+
+		//Display Roll Results on screen
+		displayRollResult(roll);
+
 	}
-
-	//Add individual rolls to get result
-	individual_rolls.forEach(function(number){
-		result += number;
-	});
-
-	//Add modifier
-	if(mod_type === 1){
-		result += modifier;
-	}else if(mod_type === 2){
-		result += modifier * dice_amount;
-	}
-
-	//Add roll data to history
-	var currentRoll = new rollData();
-	currentRoll.dice_amount = dice_amount;
-	currentRoll.faces_amount = faces_amount;
-	currentRoll.individual_rolls = individual_rolls;
-	currentRoll.modifier = modifier;
-	currentRoll.mod_type = mod_type;
-	currentRoll.result = result;
-
-	roll_history.push(currentRoll);
-
-	//Display Roll Results on screen
-	displayRollResult(currentRoll);
 }
 
-function getRollShorthand(roll){
+function getRollShorthand(){
 	//Generate roll shorthand with a rollData object. example: 1d20
 	var shorthand;
 	var modifier_operator = (roll.modifier < 0) ? '' : '+';
@@ -129,7 +137,6 @@ function getRollShorthand(roll){
 }
 
 function hideIrrelevantFields(){
-	var currentRoll = roll_history[roll_history.length - 1];
 
 	//Reset to normal
 	$('.individual-rolls').css('display', 'block');
@@ -137,35 +144,51 @@ function hideIrrelevantFields(){
 	$('.total h1').html( 'Result' );
 
 	//If there's only 1 die, hide the individual rolls section
-	if(currentRoll.dice_amount === 1 && currentRoll.modifier === 0){
+	if(roll.dice_amount === 1 && roll.modifier === 0){
 		$('.individual-rolls').css('display', 'none');
 		$('.total').removeClass('pure-u-1-2').addClass('pure-u-1');
-		$('.total h1').html( 'Rolled ' + getRollShorthand(currentRoll) );
+		$('.total h1').html( 'Rolled ' + getRollShorthand(roll) );
 	}
 }
 
-function displayRollResult(roll){
+function displayRollResult(){
 
-	hideIrrelevantFields();
-	var modifier_operator = (roll.modifier < 0) ? '' : '+';
-	'+modifier_operator+'
-	//Modifier type 1 (Add to total)
-	if(roll.mod_type === 1 && roll.modifier != 0){
-		var formatted_individual_rolls = roll.individual_rolls.join(', ') + ' '+modifier_operator+'&nbsp;' + roll.modifier;	
-	}
-	//Modifier type 2 (Add to each individual roll)
-	else if(roll.mod_type === 2 && roll.modifier != 0){
-		var formatted_individual_rolls = roll.individual_rolls.map(function(num){
-			return num.toString() + modifier_operator + roll.modifier;
-		}).join(', ');
-	}
-	//No Modifier
-	else{
-		var formatted_individual_rolls = roll.individual_rolls.join(', ');
+	function updateData(){
+		hideIrrelevantFields();
+		var modifier_operator = (roll.modifier < 0) ? '' : '+';
+		'+modifier_operator+'
+		//Modifier type 1 (Add to total)
+		if(roll.mod_type === 1 && roll.modifier != 0){
+			var formatted_individual_rolls = roll.individual_rolls.join(', ') + ' '+modifier_operator + roll.modifier;	
+		}
+		//Modifier type 2 (Add to each individual roll)
+		else if(roll.mod_type === 2 && roll.modifier != 0){
+			var formatted_individual_rolls = roll.individual_rolls.map(function(num){
+				return num.toString() + modifier_operator + roll.modifier;
+			}).join(', ');
+		}
+		//No Modifier
+		else{
+			var formatted_individual_rolls = roll.individual_rolls.join(', ');
+		}
+
+		$('.results').removeClass('closed');
+		$('.individual-rolls h1').html( 'Rolled ' + getRollShorthand(roll) );
+		$('.individual-rolls span').html( formatted_individual_rolls );
+		$('.total span').html( roll.result );
 	}
 
-	$('.results').removeClass('closed');
-	$('.individual-rolls h1').html( 'Rolled ' + getRollShorthand(roll) );
-	$('.individual-rolls span').html( formatted_individual_rolls );
-	$('.total span').html( roll.result );
+	//Transition between rolls
+
+		currently_rolling = true;
+		$('.roll-loading').removeClass('closed');
+
+		window.setTimeout(function(){
+			updateData();
+		}, roll_speed);
+
+		window.setTimeout(function(){
+			$('.roll-loading').addClass('closed');
+			currently_rolling = false;
+		}, roll_speed * 2);
 }

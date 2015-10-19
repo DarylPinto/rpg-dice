@@ -21,6 +21,8 @@ main
 /*/////////////*/
 
 .control-panel
+	position: relative
+	z-index: 10
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.18)
 
 .container
@@ -44,7 +46,7 @@ main
 .dice-controls
 	margin-top: 15px
 	position: relative
-	z-index: 10
+	z-index: 15
 	label
 		display: block
 		text-align: center
@@ -94,7 +96,26 @@ main
 .results.closed
 	max-height: 0
 
+.roll-loading
+	position: absolute
+	text-align: center
+	box-sizing: border-box
+	padding-top: 150px
+	z-index: 5
+	background-color: $grey-mid
+	height: 100%
+	width: 100%
+	font-family: 'Roboto', sans-serif
+	font-weight: 300
+	font-size: 40px
+	color: #4F4F4F
+	+v(transition, .15s)
+
+.roll-loading.closed
+	opacity: 0
+
 .results
+	position: relative
 	overflow: hidden
 	max-height: 10000px
 	+v(transition, 5s)

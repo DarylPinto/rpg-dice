@@ -38,6 +38,8 @@ main {
 /*Upper Section */
 /*///////////// */
 .control-panel {
+  position: relative;
+  z-index: 10;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.18);
 }
 
@@ -63,7 +65,7 @@ main {
 .dice-controls {
   margin-top: 15px;
   position: relative;
-  z-index: 10;
+  z-index: 15;
 }
 .dice-controls label {
   display: block;
@@ -123,7 +125,32 @@ main {
   max-height: 0;
 }
 
+.roll-loading {
+  position: absolute;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 150px;
+  z-index: 5;
+  background-color: #383838;
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  color: #4f4f4f;
+  -webkit-transition: 0.15s;
+  -moz-transition: 0.15s;
+  -ms-transition: 0.15s;
+  -o-transition: 0.15s;
+  transition: 0.15s;
+}
+
+.roll-loading.closed {
+  opacity: 0;
+}
+
 .results {
+  position: relative;
   overflow: hidden;
   max-height: 10000px;
   -webkit-transition: 5s;
