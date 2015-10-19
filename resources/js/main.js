@@ -60,10 +60,7 @@ function cleanFields(){
 
 function rollDice(){
 
-
 	var mod_type = 1;
-
-
 
 	cleanFields();
 
@@ -111,23 +108,64 @@ function getRollShorthand(roll){
 	var shorthand;
 	var modifier_operator = (roll.modifier < 0) ? '' : '+';
 
+	//Modifier
 	if(roll.modifier != 0){
 
+		//Modifier type 2
 		if(roll.mod_type === 2){
 			shorthand = roll.dice_amount+'(d'+roll.faces_amount+modifier_operator+roll.modifier+')';
-		}else{
+		}
+		//Modifier type 1
+		else{
 			shorthand = '('+roll.dice_amount+'d'+roll.faces_amount+')'+modifier_operator+roll.modifier;
 		}
-
-	}else{
+	}
+	//No modifier
+	else{
 		shorthand = roll.dice_amount+'d'+roll.faces_amount;
 	}
 
 	return shorthand;
 }
 
+function hideIrrelevantFields(){
+	var currentRoll = roll_history[roll_history.length - 1];
+
+	//Reset to normal
+	$('.individual-rolls').css('display', 'block');
+	$('.total').removeClass('pure-u-1').addClass('pure-u-1-2');
+	$('.total h1').html( 'Result' );
+
+	//If there's only 1 die, hide the individual rolls section
+	if(currentRoll.dice_amount === 1 && currentRoll.modifier === 0){
+		$('.individual-rolls').css('display', 'none');
+		$('.total').removeClass('pure-u-1-2').addClass('pure-u-1');
+		$('.total h1').html( 'Rolled ' + getRollShorthand(currentRoll) );
+	}
+}
+
 function displayRollResult(roll){
-	$('.individual-rolls h1 span').text( getRollShorthand(roll) );
-	console.log(roll.individual_rolls);
-	console.log(roll.result);
+
+	hideIrrelevantFields();
+	var modifier_operator = (roll.modifier < 0) ? '' : '+';
+	'+modifier_operator+'
+	//Modifier type 1 (Add to total)
+	if(roll.mod_type === 1 && roll.modifier != 0){
+		var formatted_individual_rolls = roll.individual_rolls.join(', ') + ' '+modifier_operator+'&nbsp;' + roll.modifier;	
+	}
+	//Modifier type 2 (Add to each individual roll)
+	else if(roll.mod_type === 2 && roll.modifier != 0){
+		var formatted_individual_rolls = roll.individual_rolls.map(function(num){
+			return num.toString() + modifier_operator + roll.modifier;
+		}).join(', ');
+	}
+	//No Modifier
+	else{
+		var formatted_individual_rolls = roll.individual_rolls.join(', ');
+	}
+
+	$('.results').removeClass('closed');
+	$('.individual-rolls h1').html( 'Rolled ' + getRollShorthand(roll) );
+	$('.individual-rolls span').html( formatted_individual_rolls );
+	$('.total span').html( roll.result );
 }

@@ -33,34 +33,47 @@
 <body>
 
 	<main>
-		<div class="ui">
-			<h1 id="logo">Dice</h1>
-			<div class="pure-g controls">
-				<div class="pure-u-1-4">
-					<label for="dice-amount">Dice</label>
-					<input type="tel" id="dice-amount" class="dice-input" value="1">
-				</div>
-				<div class="pure-u-1-4">
-					<label for="faces-amount">Faces</label>
-					<input type="tel" id="faces-amount" class="dice-input" value="20">
-				</div>
-				<div class="pure-u-1-4">
-					<label for="modifier">Modifier</label>
-					<input type="tel" id="modifier" class="dice-input" value="0">
-				</div>
-				<div class="pure-u-1-4">
-					<button id="roll-dice-button">Roll</button>
+
+		<!--Upper section-->
+		<section class="control-panel">
+			<div class="container">
+				<h1 id="logo">Dice</h1>
+				<div class="pure-g dice-controls">
+					<div class="pure-u-1-4">
+						<label for="dice-amount">Dice</label>
+						<input type="tel" id="dice-amount" class="dice-input" value="1">
+					</div>
+					<div class="pure-u-1-4">
+						<label for="faces-amount">Faces</label>
+						<input type="tel" id="faces-amount" class="dice-input" value="20">
+					</div>
+					<div class="pure-u-1-4">
+						<label for="modifier">Modifier</label>
+						<input type="tel" id="modifier" class="dice-input" value="0">
+					</div>
+					<div class="pure-u-1-4">
+						<button id="roll-dice-button">Roll</button>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="pure-g results">
-			<div class="pure-u-1-2 individual-rolls">
-				<h1>Rolled <span>X</span></h1>
+		</section>
+		<!--Upper section end-->
+
+		<!--Results area-->
+		<section class="results closed">
+			<div class="pure-g">
+				<div class="pure-u-1-2 individual-rolls">
+					<h1></h1>
+					<span></span>
+				</div>
+				<div class="pure-u-1-2 total">
+					<h1>Result</h1>
+					<span></span>
+				</div>
 			</div>
-			<div class="pure-u-1-2 total">
-				<h1>Result</h1>
-			</div>
-		</div>
+		</section>
+		<!--Results area end-->
+
 	</main>
 
 <script type="text/javascript" src="resources/js/main.js"></script>
