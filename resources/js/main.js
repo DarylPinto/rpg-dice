@@ -1,9 +1,21 @@
+/*/////////////////////////////////
+
+Global Variables (inside an object)
+
+/////////////////////////////////*/
+
 var _r = {
-	roll_history: [],
-	roll_speed: 500,
-	currently_rolling: false,
-	roll: null
+	roll_history: [], //Array of roll objects
+	roll_speed: 300, //Roll speed
+	currently_rolling: false, //Is the dice currently being rolled?
+	roll: null, //Current roll
 }
+
+/*///////////////////////////////////////////////////////
+
+Object Constructor to contain information about each roll
+
+///////////////////////////////////////////////////////*/
 
 function rollData(dice_amount, faces_amount, individual_rolls, modifier, mod_type, result){
 	this.dice_amount = dice_amount;
@@ -21,6 +33,12 @@ function rollData(dice_amount, faces_amount, individual_rolls, modifier, mod_typ
 		mod_type 2: add modifier to each individual roll
 	*/
 }
+
+/*//////////////
+
+Helper functions
+
+//////////////*/
 
 function incrementInputFields(direction){
 
@@ -66,58 +84,9 @@ function cleanFields(){
 
 }
 
-function rollDice(){
-
-	if(!_r.currently_rolling){ //Prevent spam rolling
-
-		var mod_type = 1;
-
-		cleanFields();
-
-		//Set variables
-		var dice_amount = parseInt( $('#dice-amount').val() );
-		var faces_amount = parseInt( $('#faces-amount').val() );
-		var modifier = parseInt( $('#modifier').val() );
-		var individual_rolls = [];
-		var result = 0;
-
-		//Create array that contains the roll of each individual die
-		for(var i = 0;i < dice_amount;i++){
-			individual_rolls.push( randomNumberBetween(0,faces_amount) );
-		}
-
-		//Add individual rolls to get result
-		individual_rolls.forEach(function(number){
-			result += number;
-		});
-
-		//Add modifier
-		if(mod_type === 1){
-			result += modifier;
-		}else if(mod_type === 2){
-			result += modifier * dice_amount;
-		}
-
-		//Add roll data to history
-		var currentRoll = new rollData(
-			dice_amount,
-			faces_amount,
-			individual_rolls,
-			modifier,
-			mod_type,
-			result);
-
-		_r.roll_history.push(currentRoll);
-		_r.roll = _r.roll_history[_r.roll_history.length - 1];
-
-		//Display Roll Results on screen
-		displayRollResult();
-
-	}
-}
-
 function getRollShorthand(){
 	//Generate roll shorthand with a rollData object. example: 1d20
+
 	var shorthand;
 	var display_mod_nospace = _r.roll.display_modifier.replace(/ /g, '');
 
@@ -141,12 +110,65 @@ function getRollShorthand(){
 	return shorthand;
 }
 
-function hideIrrelevantFields(){
+function storeDiceRoll(){
+	//Store roll information
+
+	var mod_type = 1;
+
+	//Set variables
+	var dice_amount = parseInt( $('#dice-amount').val() );
+	var faces_amount = parseInt( $('#faces-amount').val() );
+	var modifier = parseInt( $('#modifier').val() );
+	var individual_rolls = [];
+	var result = 0;
+
+	//Create array that contains the roll of each individual die
+	for(var i = 0;i < dice_amount;i++){
+		individual_rolls.push( randomNumberBetween(0,faces_amount) );
+	}
+
+	//Add individual rolls to get result
+	individual_rolls.forEach(function(number){
+		result += number;
+	});
+
+	//Add modifier
+	if(mod_type === 1){
+		result += modifier;
+	}else if(mod_type === 2){
+		result += modifier * dice_amount;
+	}
+
+	//Add roll data to history
+	var currentRoll = new rollData(
+		dice_amount,
+		faces_amount,
+		individual_rolls,
+		modifier,
+		mod_type,
+		result);
+
+	_r.roll_history.push(currentRoll);
+	_r.roll = _r.roll_history[_r.roll_history.length - 1];
+}
+
+/*//////////////
+
+DOM Manipulation
+
+//////////////*/
+
+function hideIrrelevantSections(){
+	//Hide sections that don't need to be shown (such as individual rolls for a single die)
+
+	function showAllSections(){
+		$('.individual-rolls').css('display', 'block');
+		$('.total').removeClass('pure-u-1').addClass('pure-u-1-2');
+		$('.total h1').html('Result');		
+	}
 
 	//Show individual rolls section and results section (resetting to normal)
-	$('.individual-rolls').css('display', 'block');
-	$('.total').removeClass('pure-u-1').addClass('pure-u-1-2');
-	$('.total h1').html('Result');
+	showAllSections();	
 
 	//If there's only 1 die, hide the individual rolls section
 	if(_r.roll.dice_amount === 1 && _r.roll.modifier === 0){
@@ -157,14 +179,16 @@ function hideIrrelevantFields(){
 }
 
 function displayRollResult(){
+	//Display Roll Results on the screen
 
 	function updateData(){
-		hideIrrelevantFields();
+		hideIrrelevantSections();
+
 		var display_mod_nbsp = _r.roll.display_modifier.replace(/ /g, '&nbsp;');
 
 		//Modifier type 1 (Add to total)
 		if(_r.roll.mod_type === 1 && _r.roll.modifier != 0){
-			var formatted_individual_rolls = _r.roll.individual_rolls.join(', ') + ' ' + display_mod_nbsp;	
+			var formatted_individual_rolls = '(' + _r.roll.individual_rolls.join(', ') + ') ' + display_mod_nbsp;	
 		}
 		//Modifier type 2 (Add to each individual roll)
 		else if(_r.roll.mod_type === 2 && _r.roll.modifier != 0){
@@ -196,4 +220,26 @@ function displayRollResult(){
 			$('.results-grid').removeClass('faded-out');
 			_r.currently_rolling = false;
 		}, _r.roll_speed );
+}
+
+/*///////////
+
+Main Function
+
+///////////*/
+
+function rollDice(){
+
+	if(!_r.currently_rolling){ //Prevent spam rolling
+
+		//Validate user's inputs
+		cleanFields();
+
+		//Store data from input fields
+		storeDiceRoll();
+
+		//Display Roll Results on screen
+		displayRollResult();
+
+	}
 }
