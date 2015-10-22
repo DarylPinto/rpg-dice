@@ -6,7 +6,7 @@ Global Variables (inside an object)
 
 var _r = {
 	roll_history: [], //Array of roll objects
-	roll_speed: 300, //Roll speed
+	roll_speed: 400, //Roll speed
 	currently_rolling: false, //Is the dice currently being rolled?
 	roll: null, //Current roll
 }
@@ -188,7 +188,7 @@ function displayRollResult(){
 
 		//Modifier type 1 (Add to total)
 		if(_r.roll.mod_type === 1 && _r.roll.modifier != 0){
-			var formatted_individual_rolls = '(' + _r.roll.individual_rolls.join(', ') + ') ' + display_mod_nbsp;	
+			var formatted_individual_rolls = _r.roll.individual_rolls.join(', ') + ' ' + display_mod_nbsp;	
 		}
 		//Modifier type 2 (Add to each individual roll)
 		else if(_r.roll.mod_type === 2 && _r.roll.modifier != 0){
@@ -222,6 +222,26 @@ function displayRollResult(){
 		}, _r.roll_speed );
 }
 
+function logToRollHistory(rollDataItem){
+	return
+}
+
+function openOverlay(){
+	$('.overlay').css('display', 'block');
+
+	window.setTimeout(function(){
+	$('.overlay').removeClass('closed');
+	}, 10);
+}
+
+function closeOverlay(){
+	$('.overlay').addClass('closed');
+
+	window.setTimeout(function(){
+		$('.overlay').css('display', 'none');
+	}, 400);
+}
+
 /*///////////
 
 Main Function
@@ -237,6 +257,9 @@ function rollDice(){
 
 		//Store data from input fields
 		storeDiceRoll();
+
+		//Log Roll to Roll History
+		logToRollHistory(_r.roll);
 
 		//Display Roll Results on screen
 		displayRollResult();
