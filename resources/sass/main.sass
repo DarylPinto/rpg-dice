@@ -130,6 +130,12 @@ main
 		font-size: 40px
 		color: #4F4F4F
 
+.results-grid
+	opacity: 1
+	+v(transition, .15s)
+	&.faded-out
+		opacity: 0
+
 .individual-rolls
 	box-sizing: border-box
 	border-right: 1px solid #4F4F4F
