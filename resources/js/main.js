@@ -110,6 +110,28 @@ function getRollShorthand(){
 	return shorthand;
 }
 
+function getFormattedIndividualRolls(rollDataItem){
+	var display_mod_nbsp = rollDataItem.display_modifier.replace(/ /g, '&nbsp;');
+	var display_mod_nospace = _r.roll.display_modifier.replace(/ /g, '');
+
+	//Modifier type 1 (Add to total)
+	if(rollDataItem.mod_type === 1 && rollDataItem.modifier != 0){
+		var formatted_individual_rolls = rollDataItem.individual_rolls.join(', ') + ' ' + display_mod_nbsp;	
+	}
+	//Modifier type 2 (Add to each individual roll)
+	else if(rollDataItem.mod_type === 2 && rollDataItem.modifier != 0){
+		var formatted_individual_rolls = rollDataItem.individual_rolls.map(function(num){
+			return num.toString() + display_mod_nospace;
+		}).join(', ');
+	}
+	//No Modifier
+	else{
+		var formatted_individual_rolls = rollDataItem.individual_rolls.join(', ');
+	}
+
+	return formatted_individual_rolls;
+}
+
 function storeDiceRoll(){
 	//Store roll information
 
@@ -183,27 +205,10 @@ function displayRollResult(){
 
 	function updateData(){
 		hideIrrelevantSections();
-
-		var display_mod_nbsp = _r.roll.display_modifier.replace(/ /g, '&nbsp;');
-
-		//Modifier type 1 (Add to total)
-		if(_r.roll.mod_type === 1 && _r.roll.modifier != 0){
-			var formatted_individual_rolls = _r.roll.individual_rolls.join(', ') + ' ' + display_mod_nbsp;	
-		}
-		//Modifier type 2 (Add to each individual roll)
-		else if(_r.roll.mod_type === 2 && _r.roll.modifier != 0){
-			var formatted_individual_rolls = _r.roll.individual_rolls.map(function(num){
-				return num.toString() + display_mod_nbsp;
-			}).join(', ');
-		}
-		//No Modifier
-		else{
-			var formatted_individual_rolls = _r.roll.individual_rolls.join(', ');
-		}
-
+		
 		$('.results').removeClass('closed');
 		$('.individual-rolls h1').html( 'Rolled ' + getRollShorthand(_r.roll) );
-		$('.individual-rolls span').html( formatted_individual_rolls );
+		$('.individual-rolls span').html( getFormattedIndividualRolls(_r.roll) );
 		$('.total span').html( _r.roll.result );
 	}
 
@@ -222,8 +227,24 @@ function displayRollResult(){
 		}, _r.roll_speed );
 }
 
-function logToRollHistory(rollDataItem){
-	return
+function logToRollHistoryWindow(rollDataItem){
+	var li = document.createElement('li');
+	var roll_shorthand = document.createElement('div');
+	var individual_rolls = document.createElement('div');
+	var roll_result = document.createElement('div');
+
+	$(li).addClass('pure-g roll-data-item');
+	$(roll_shorthand).addClass('pure-u-1-4 archive-shorthand');
+	$(individual_rolls).addClass('pure-u-1-2 archive-individual-rolls');
+	$(roll_result).addClass('pure-u-1-4 archive-total');
+
+	$(roll_shorthand).html( getRollShorthand(rollDataItem) );
+	$(individual_rolls).html( getFormattedIndividualRolls(rollDataItem) );
+	$(roll_result).html( rollDataItem.result );
+
+	$(li).append(roll_shorthand, individual_rolls, roll_result);
+	$('.roll-history ul').prepend(li);
+
 }
 
 function openOverlay(){
@@ -258,8 +279,8 @@ function rollDice(){
 		//Store data from input fields
 		storeDiceRoll();
 
-		//Log Roll to Roll History
-		logToRollHistory(_r.roll);
+		//Log Roll to Roll History Popup window
+		logToRollHistoryWindow(_r.roll);
 
 		//Display Roll Results on screen
 		displayRollResult();

@@ -89,14 +89,17 @@ main
 	&:active
 		background-color: #247EA3
 
-#show-history
+.secondary-button
 	color: #8196AE
 	border: 1px solid #8196AE
 	font-family: 'Roboto', sans-serif
 	font-size: 14px
 	font-weight: 300
-	padding: 15px 30px
-	border-radius: 10px
+	padding: 13px
+	margin-left: 10px
+	margin-right: 10px
+	width: 150px
+	border-radius: 7px
 	background-color: transparent
 	outline: 0
 	margin-top: 45px
@@ -177,7 +180,7 @@ main
 		text-shadow: 0 0 18px rgba(0, 0, 0, 0.3)
 
 /*///////////////////*/
-/*Rol History Overlay*/
+/*Roll History Overlay*/
 /*///////////////////*/
 
 .overlay
@@ -210,3 +213,31 @@ main
 	max-width: 70%
 	height: 70vh
 	background-color: #CCC
+	ul
+		width: 90%
+		margin: 0 auto
+		margin-top: 70px
+
+.roll-data-item.pure-g
+	text-align: center
+	> div
+		min-height: 100px
+		font-family: 'Roboto', sans-serif
+
+.archive-shorthand
+	color: #333
+	font-size 20px
+.archive-individual-rolls
+	color: #545454
+.archive-total
+	color: black
+	font-size: 40px
+
+.roll-data-item:first-of-type
+	background-color: #181818
+	.archive-shorthand
+		color: #B6B6B6
+	.archive-individual-rolls
+		color: #969696
+	.archive-total
+		color: white
