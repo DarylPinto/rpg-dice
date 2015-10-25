@@ -47,11 +47,14 @@ $(document).ready(function() {
 
 //When the window is Resized
 $( window ).resize(function() {
+
+	keepResultVisible();
+
 });
 
 //When the page scrolls
 $(window).scroll(function() {
 
-keepResultVisible();
+	keepResultVisible();
 
 });

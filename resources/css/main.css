@@ -1,1 +1,334 @@
-*{margin:0;padding:0}ul{font-size:0}li{font-size:14px}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.clearfix{clear:both}body{background-color:#2C2C2C}main{width:100%;max-width:1000px;margin:30px auto;background-color:#383838;border-radius:7px;overflow:hidden}button{cursor:pointer}.control-panel{position:relative;z-index:10;box-shadow:0 0 15px rgba(0,0,0,0.18)}.container{width:495px;margin:0 auto;padding-bottom:50px;text-align:center;position:relative;z-index:5}#logo{color:#A6A6A6;font-family:"Raleway",sans-serif;text-transform:uppercase;font-size:225px;margin:0;position:relative;left:-15px;text-align:center}.dice-controls{margin-top:15px;position:relative;z-index:15}.dice-controls label{display:block;text-align:center;color:#CCC;margin-top:-24px;font-family:"Roboto",sans-serif;font-weight:200;padding-bottom:5px}.dice-input{background-color:#2C2C2C;border-radius:7px;min-height:25px;padding:10px;color:white;border:none;width:80%;font-family:"Roboto",sans-serif;font-weight:900;font-size:20px;text-transform:uppercase;text-align:center;outline:0}#roll-dice-button{height:45px;width:95%;background-color:#41B0DD;border:0;text-transform:uppercase;font-family:"Raleway",sans-serif;font-size:20px;font-weight:900;color:white;outline:0;border-radius:7px;-webkit-transition:0.1s;-moz-transition:0.1s;-ms-transition:0.1s;-o-transition:0.1s;transition:0.1s}#roll-dice-button:hover{background-color:#5ABFE8}#roll-dice-button:active{background-color:#247EA3}.secondary-button{color:#8196AE;border:1px solid #8196AE;font-family:'Roboto',sans-serif;font-size:14px;font-weight:300;padding:13px;margin-left:10px;margin-right:10px;width:150px;border-radius:7px;background-color:transparent;outline:0;margin-top:45px;display:inline-block;-webkit-transition:0.3s;-moz-transition:0.3s;-ms-transition:0.3s;-o-transition:0.3s;transition:0.3s}.secondary-button:hover{background-color:#8196AE;color:#383838}#results.closed{max-height:0}.roll-loading{position:absolute;text-align:center;box-sizing:border-box;padding-top:150px;z-index:5;background-color:#383838;height:100%;width:100%;font-family:'Roboto',sans-serif;font-weight:300;font-size:40px;color:#4F4F4F;-webkit-transition:0.15s;-moz-transition:0.15s;-ms-transition:0.15s;-o-transition:0.15s;transition:0.15s}.roll-loading.closed{opacity:0}#results{position:relative;overflow:hidden;max-height:10000px;-webkit-transition:5s;-moz-transition:5s;-ms-transition:5s;-o-transition:5s;transition:5s}#results .individual-rolls,#results .total{text-align:center;margin-top:30px;margin-bottom:30px}#results h1{font-family:'Roboto',sans-serif;margin-top:15px;margin-bottom:30px;font-weight:300;font-size:40px;color:#4F4F4F}.results-grid{opacity:1;-webkit-transition:0.15s;-moz-transition:0.15s;-ms-transition:0.15s;-o-transition:0.15s;transition:0.15s}.results-grid.faded-out{opacity:0}.individual-rolls{box-sizing:border-box;border-right:1px solid #4F4F4F}.individual-rolls span{font-size:70px;color:#8E8E8E;font-weight:100;font-family:'Roboto',sans-serif;display:block;width:80%;margin:0 auto}.total span{position:relative;top:-25px;margin-top:0;color:#CDCDCD;font-size:185px;font-family:'Roboto',sans-serif;font-weight:100;text-shadow:0 0 18px rgba(0,0,0,0.3)}span.stickied-total{position:fixed;display:block;width:500px;top:95px;left:0;right:0;margin-left:675px}.overlay{display:none;position:fixed;z-index:50;height:100vh;width:100%;top:0;left:0;-webkit-transition:0.3s;-moz-transition:0.3s;-ms-transition:0.3s;-o-transition:0.3s;transition:0.3s}.overlay.closed{opacity:0}.blackout{position:absolute;height:100%;width:100%;background-color:rgba(0,0,0,0.6)}.roll-history{position:fixed;border-radius:20px;left:0;right:0;margin:0 auto;margin-top:15vh;width:800px;max-width:70%;height:70vh;background-color:#CCC}.roll-history ul{width:90%;margin:0 auto;margin-top:70px}.roll-data-item.pure-g{text-align:center}.roll-data-item.pure-g>div{min-height:100px;font-family:'Roboto',sans-serif}.archive-shorthand{color:#333}.archive-individual-rolls{color:#545454}.archive-total{color:black;font-size:40px}.roll-data-item:first-of-type{background-color:#181818}.roll-data-item:first-of-type .archive-shorthand{color:#B6B6B6}.roll-data-item:first-of-type .archive-individual-rolls{color:#969696}.roll-data-item:first-of-type .archive-total{color:white}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  font-size: 0;
+}
+
+li {
+  font-size: 14px;
+}
+
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.clearfix {
+  clear: both;
+}
+
+body {
+  background-color: #2c2c2c;
+}
+
+main {
+  width: 100%;
+  max-width: 1000px;
+  margin: 30px auto;
+  background-color: #383838;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+/*///////////// */
+/*Upper Section */
+/*///////////// */
+.control-panel {
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.18);
+}
+
+.container {
+  width: 495px;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+#logo {
+  color: #a6a6a6;
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-size: 225px;
+  margin: 0;
+  position: relative;
+  left: -15px;
+  text-align: center;
+}
+
+.dice-controls {
+  margin-top: 15px;
+  position: relative;
+  z-index: 15;
+}
+.dice-controls label {
+  display: block;
+  text-align: center;
+  color: #cccccc;
+  margin-top: -24px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 200;
+  padding-bottom: 5px;
+}
+
+.dice-input {
+  background-color: #2c2c2c;
+  border-radius: 7px;
+  min-height: 25px;
+  padding: 10px;
+  color: white;
+  border: none;
+  width: 80%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: center;
+  outline: 0;
+  cursor: pointer;
+}
+
+#roll-dice-button {
+  height: 45px;
+  width: 95%;
+  background-color: #41b0dd;
+  border: 0;
+  text-transform: uppercase;
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: white;
+  outline: 0;
+  border-radius: 7px;
+  -webkit-transition: 0.1s;
+  -moz-transition: 0.1s;
+  -ms-transition: 0.1s;
+  -o-transition: 0.1s;
+  transition: 0.1s;
+}
+#roll-dice-button:hover {
+  background-color: #5abfe8;
+}
+#roll-dice-button:active {
+  background-color: #247ea3;
+}
+
+.secondary-button {
+  color: #8196ae;
+  border: 1px solid #8196ae;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 13px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 150px;
+  border-radius: 7px;
+  background-color: transparent;
+  outline: 0;
+  margin-top: 45px;
+  display: inline-block;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+.secondary-button:hover {
+  background-color: #8196ae;
+  color: #383838;
+}
+
+/*/////////////// */
+/*Results Section */
+/*/////////////// */
+#results.closed {
+  max-height: 0;
+}
+
+.roll-loading {
+  position: absolute;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 150px;
+  z-index: 5;
+  background-color: #383838;
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  color: #4f4f4f;
+  -webkit-transition: 0.15s;
+  -moz-transition: 0.15s;
+  -ms-transition: 0.15s;
+  -o-transition: 0.15s;
+  transition: 0.15s;
+}
+
+.roll-loading.closed {
+  opacity: 0;
+}
+
+#results {
+  position: relative;
+  overflow: hidden;
+  max-height: 10000px;
+  -webkit-transition: 5s;
+  -moz-transition: 5s;
+  -ms-transition: 5s;
+  -o-transition: 5s;
+  transition: 5s;
+}
+#results .individual-rolls, #results .total {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+#results h1 {
+  font-family: "Roboto", sans-serif;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  font-weight: 300;
+  font-size: 40px;
+  color: #4f4f4f;
+}
+
+.results-grid {
+  opacity: 1;
+  -webkit-transition: 0.15s;
+  -moz-transition: 0.15s;
+  -ms-transition: 0.15s;
+  -o-transition: 0.15s;
+  transition: 0.15s;
+}
+.results-grid.faded-out {
+  opacity: 0;
+}
+
+.individual-rolls {
+  box-sizing: border-box;
+  border-right: 1px solid #4f4f4f;
+}
+.individual-rolls span {
+  font-size: 70px;
+  color: #8e8e8e;
+  font-weight: 100;
+  font-family: "Roboto", sans-serif;
+  display: block;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.total span {
+  position: relative;
+  top: -25px;
+  margin-top: 0;
+  color: #cdcdcd;
+  font-size: 185px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.3);
+}
+
+span.stickied-total {
+  position: fixed;
+  display: block;
+  width: 500px;
+  top: 95px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+/*/////////////////// */
+/*Roll History Overlay */
+/*/////////////////// */
+.overlay {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.overlay.closed {
+  opacity: 0;
+}
+
+.blackout {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.roll-history {
+  position: fixed;
+  border-radius: 20px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  margin-top: 15vh;
+  width: 800px;
+  max-width: 70%;
+  height: 70vh;
+  background-color: #cccccc;
+}
+.roll-history ul {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 70px;
+}
+
+.roll-data-item.pure-g {
+  text-align: center;
+}
+.roll-data-item.pure-g > div {
+  min-height: 100px;
+  font-family: "Roboto", sans-serif;
+}
+
+.archive-shorthand {
+  color: #333333;
+  font-size: 20px;
+}
+
+.archive-individual-rolls {
+  color: #545454;
+}
+
+.archive-total {
+  color: black;
+  font-size: 40px;
+}
+
+.roll-data-item:first-of-type {
+  background-color: #181818;
+}
+.roll-data-item:first-of-type .archive-shorthand {
+  color: #b6b6b6;
+}
+.roll-data-item:first-of-type .archive-individual-rolls {
+  color: #969696;
+}
+.roll-data-item:first-of-type .archive-total {
+  color: white;
+}

@@ -221,7 +221,13 @@ function hideIrrelevantSections(){
 function keepResultVisible(){
 	if( $(window).scrollTop() > $('#results').offset().top && (_r.roll.dice_amount > 1 || _r.roll.modifier != 0) ){
 		$('.total span').addClass('stickied-total');
+		$('.stickied-total').css({
+			'margin-left': ($(window).width() / 2).toString() + 'px',
+		});
 	}else{
+		$('.stickied-total').css({
+			'margin-left': '0px',
+		});
 		$('.total span').removeClass('stickied-total');
 	}
 }
