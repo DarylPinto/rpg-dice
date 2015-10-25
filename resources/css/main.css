@@ -194,6 +194,7 @@ button {
   text-align: center;
   margin-top: 30px;
   margin-bottom: 30px;
+  min-height: 290px;
 }
 #results h1 {
   font-family: "Roboto", sans-serif;
@@ -231,9 +232,8 @@ button {
 }
 
 .total span {
-  position: relative;
-  top: -25px;
-  margin-top: 0;
+  display: block;
+  margin-top: -25px;
   color: #cdcdcd;
   font-size: 185px;
   font-family: "Roboto", sans-serif;
@@ -245,9 +245,7 @@ span.stickied-total {
   position: fixed;
   display: block;
   width: 500px;
-  top: 95px;
-  left: 0;
-  right: 0;
+  top: 97px;
   margin: 0 auto;
 }
 

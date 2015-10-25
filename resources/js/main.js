@@ -202,7 +202,7 @@ function hideIrrelevantSections(){
 	//Hide sections that don't need to be shown (such as individual rolls for a single die)
 
 	function showAllSections(){
-		$('.individual-rolls').css('display', 'block');
+		$('.individual-rolls').css('display', 'inline-block');
 		$('.total').removeClass('pure-u-1').addClass('pure-u-1-2');
 		$('.total h1').html('Result');		
 	}
@@ -219,15 +219,15 @@ function hideIrrelevantSections(){
 }
 
 function keepResultVisible(){
+
+	var distanceFromRight = ( $(window).width() - $('main').width() ) / 2;
+
 	if( $(window).scrollTop() > $('#results').offset().top && (_r.roll.dice_amount > 1 || _r.roll.modifier != 0) ){
 		$('.total span').addClass('stickied-total');
 		$('.stickied-total').css({
-			'margin-left': ($(window).width() / 2).toString() + 'px',
+			'right': distanceFromRight + 'px',
 		});
 	}else{
-		$('.stickied-total').css({
-			'margin-left': '0px',
-		});
 		$('.total span').removeClass('stickied-total');
 	}
 }

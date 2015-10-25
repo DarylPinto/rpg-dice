@@ -147,6 +147,7 @@ button
 		text-align: center
 		margin-top: 30px
 		margin-bottom: 30px
+		min-height: 290px
 	h1
 		font-family: 'Roboto', sans-serif
 		margin-top: 15px
@@ -175,9 +176,8 @@ button
 
 .total
 	span
-		position: relative
-		top: -25px
-		margin-top: 0
+		display: block
+		margin-top: -25px 
 		color: #CDCDCD
 		font-size: 185px
 		font-family: 'Roboto', sans-serif
@@ -188,9 +188,7 @@ span.stickied-total
 	position: fixed
 	display: block
 	width: 500px
-	top: 95px
-	left: 0
-	right: 0
+	top: 97px
 	margin: 0 auto
 
 /*///////////////////*/
@@ -255,3 +253,5 @@ span.stickied-total
 		color: #969696
 	.archive-total
 		color: white
+
+//TODO: Fix firefox rendering issue
