@@ -40,6 +40,24 @@ Helper functions
 
 //////////////*/
 
+function smoothScrollTo(id, delay, speed){
+
+	window.setTimeout(function(){
+
+		$('html, body').animate({
+			scrollTop: $(id).offset().top
+		}, speed);
+
+	}, delay);
+
+}
+
+/*///////////////
+
+Data Manipulation
+
+///////////////*/
+
 function incrementInputFields(direction){
 
 	//This function is necessary to simulate the <input type='number'> up & down arrow key controls
@@ -200,13 +218,21 @@ function hideIrrelevantSections(){
 	}
 }
 
+function keepResultVisible(){
+	if( $(window).scrollTop() > $('#results').offset().top && (_r.roll.dice_amount > 1 || _r.roll.modifier != 0) ){
+		$('.total span').addClass('stickied-total');
+	}else{
+		$('.total span').removeClass('stickied-total');
+	}
+}
+
 function displayRollResult(){
 	//Display Roll Results on the screen
 
 	function updateData(){
 		hideIrrelevantSections();
 		
-		$('.results').removeClass('closed');
+		$('#results').removeClass('closed');
 		$('.individual-rolls h1').html( 'Rolled ' + getRollShorthand(_r.roll) );
 		$('.individual-rolls span').html( getFormattedIndividualRolls(_r.roll) );
 		$('.total span').html( _r.roll.result );
@@ -284,6 +310,9 @@ function rollDice(){
 
 		//Display Roll Results on screen
 		displayRollResult();
+
+		//Scroll to results
+		smoothScrollTo('#results', _r.roll_speed, 500);
 
 	}
 }

@@ -51,4 +51,7 @@ $( window ).resize(function() {
 
 //When the page scrolls
 $(window).scroll(function() {
+
+keepResultVisible();
+
 });

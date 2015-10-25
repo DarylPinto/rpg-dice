@@ -15,6 +15,9 @@ main
 	border-radius: 7px
 	overflow: hidden
 
+button
+	cursor: pointer
+
 /*/////////////*/
 /*Upper Section*/
 /*/////////////*/
@@ -113,7 +116,7 @@ main
 /*Results Section*/
 /*///////////////*/
 
-.results.closed
+#results.closed
 	max-height: 0
 
 .roll-loading
@@ -134,7 +137,7 @@ main
 .roll-loading.closed
 	opacity: 0
 
-.results
+#results
 	position: relative
 	overflow: hidden
 	max-height: 10000px
@@ -145,7 +148,8 @@ main
 		margin-bottom: 30px
 	h1
 		font-family: 'Roboto', sans-serif
-		margin-top: 10px
+		margin-top: 15px
+		margin-bottom: 30px
 		font-weight: 300
 		font-size: 40px
 		color: #4F4F4F
@@ -178,6 +182,16 @@ main
 		font-family: 'Roboto', sans-serif
 		font-weight: 100
 		text-shadow: 0 0 18px rgba(0, 0, 0, 0.3)
+
+span.stickied-total
+	position: fixed
+	display: block
+	width: 500px
+	top: 95px
+	left: 0
+	right: 0
+	margin 0 auto
+	margin-left: 675px
 
 /*///////////////////*/
 /*Roll History Overlay*/
