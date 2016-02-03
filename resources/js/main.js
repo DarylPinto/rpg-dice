@@ -265,14 +265,14 @@ function logToRollHistoryWindow(rollDataItem){
 	var individual_rolls = document.createElement('div');
 	var roll_result = document.createElement('div');
 
-	$(li).addClass('pure-g roll-data-item');
-	$(roll_shorthand).addClass('pure-u-1-4 archive-shorthand');
-	$(individual_rolls).addClass('pure-u-1-2 archive-individual-rolls');
-	$(roll_result).addClass('pure-u-1-4 archive-total');
+	$(li).addClass('roll-data-item pure-g');
+	$(roll_shorthand).addClass('archive-shorthand pure-u-1-4');
+	$(individual_rolls).addClass('archive-individual-rolls pure-u-1-2');
+	$(roll_result).addClass('archive-total pure-u-1-4');
 
-	$(roll_shorthand).html( getRollShorthand(rollDataItem) );
-	$(individual_rolls).html( getFormattedIndividualRolls(rollDataItem) );
-	$(roll_result).html( rollDataItem.result );
+	$(roll_shorthand).html( '<span>'+getRollShorthand(rollDataItem)+'</span>' );
+	$(individual_rolls).html( '<span>'+getFormattedIndividualRolls(rollDataItem)+'</span>' );
+	$(roll_result).html( '<span>'+rollDataItem.result+'</span>' );
 
 	$(li).append(roll_shorthand, individual_rolls, roll_result);
 	$('.roll-history ul').prepend(li);

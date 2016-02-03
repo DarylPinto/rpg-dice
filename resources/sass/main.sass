@@ -210,8 +210,8 @@ span.stickied-total
 
 .blackout
 	position: absolute
-	height: 100%
-	width: 100%
+	height: 200%
+	width: 200%
 	background-color: rgba(0,0,0,0.6)
 
 .roll-history
@@ -225,6 +225,7 @@ span.stickied-total
 	max-width: 70%
 	height: 70vh
 	background-color: #CCC
+	overflow: auto
 	ul
 		width: 90%
 		margin: 0 auto
@@ -232,9 +233,31 @@ span.stickied-total
 
 .roll-data-item.pure-g
 	text-align: center
+	list-style: none
+	display: flex
+	align-items: center
+	justify-content: center
+	min-height: 60px
+	padding-top: 20px
+	padding-bottom: 20px
+	border-bottom: 1px solid rgba(0,0,0,0.2)	
 	> div
-		min-height: 100px
 		font-family: 'Roboto', sans-serif
+		display: flex
+		align-items: center
+		justify-content: center
+	&:first-of-type
+		background-color: #181818
+		border-bottom: 1px solid transparent
+		.archive-shorthand
+			color: #B6B6B6
+		.archive-individual-rolls
+			color: #969696
+		.archive-total
+			color: white
+
+	&:last-of-type
+		border-bottom: 1px solid transparent
 
 .archive-shorthand
 	color: #333
@@ -244,14 +267,3 @@ span.stickied-total
 .archive-total
 	color: black
 	font-size: 40px
-
-.roll-data-item:first-of-type
-	background-color: #181818
-	.archive-shorthand
-		color: #B6B6B6
-	.archive-individual-rolls
-		color: #969696
-	.archive-total
-		color: white
-
-//TODO: Fix firefox rendering issue
