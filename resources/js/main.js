@@ -25,7 +25,7 @@ function rollData(dice_amount, faces_amount, individual_rolls, modifier, mod_typ
 	this.mod_type = mod_type;
 	this.result = result;
 
-	// '+ 10' or '- 10' as a string for displaying on the page
+	// '+ N' or '- N' as a string for displaying on the page
 	this.display_modifier = (modifier >= 0) ? '+ ' + modifier.toString() : '- ' + (modifier * -1).toString();
 
 	/*
@@ -312,7 +312,11 @@ function rollDice(){
 		storeDiceRoll();
 
 		//Log Roll to Roll History Popup window
-		logToRollHistoryWindow(_r.roll);
+		window.setTimeout(function(){
+
+			logToRollHistoryWindow(_r.roll);	
+			
+		}, _r.roll_speed);
 
 		//Display Roll Results on screen
 		displayRollResult();

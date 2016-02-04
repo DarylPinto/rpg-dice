@@ -258,7 +258,7 @@ span.stickied-total {
   overflow: hidden;
   position: relative; }
   .roll-history ul {
-    width: calc(100% - 110px);
+    width: calc(100% - 90px);
     margin: 0 auto;
     height: calc(100% - 150px);
     margin-top: 75px;
@@ -266,17 +266,20 @@ span.stickied-total {
     padding-right: 20px;
     box-sizing: border-box;
     overflow-y: auto; }
-    .roll-history ul::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      -webkit-border-radius: 10px;
-      border-radius: 10px; }
-    .roll-history ul::-webkit-scrollbar-thumb {
-      -webkit-border-radius: 10px;
-      border-radius: 10px;
-      background: rgba(50, 50, 50, 0.8);
-      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); }
-    .roll-history ul::-webkit-scrollbar-thumb:window-inactive {
-      background: rgba(80, 80, 80, 0.4); }
+
+.roll-history ul::-webkit-scrollbar {
+  width: 12px; }
+.roll-history ul::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px; }
+.roll-history ul::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(50, 50, 50, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); }
+  .roll-history ul::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(80, 80, 80, 0.4); }
 
 .roll-data-item.pure-g {
   text-align: center;

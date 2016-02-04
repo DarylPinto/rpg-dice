@@ -25,6 +25,7 @@ var keys = {
 $(document).keydown(function(e) {
 	switch(e.which) {
 		case keys.enter:
+			closeOverlay();
 			rollDice();
 			break;
 		case keys.esc:
