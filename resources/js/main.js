@@ -52,6 +52,14 @@ function smoothScrollTo(id, delay, speed){
 
 }
 
+function playAudio(name){
+	var path = 'resources/sounds/';
+	var player = document.querySelector('#audio-player');
+	player.pause();
+	player.src = path+name+'.mp3';
+	player.play();
+}
+
 /*///////////////
 
 Data Manipulation

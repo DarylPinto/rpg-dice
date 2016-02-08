@@ -319,4 +319,13 @@ span.stickied-total {
   color: black;
   font-size: 40px; }
 
+#audio-player {
+  height: 0;
+  width: 0;
+  position: absolute;
+  top: -999px;
+  left: 999px;
+  opacity: 0;
+  display: none; }
+
 /*# sourceMappingURL=main.css.map */
