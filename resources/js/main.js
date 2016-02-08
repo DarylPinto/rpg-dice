@@ -6,6 +6,7 @@ Global Variables (inside an object)
 
 var _r = {
 	roll_history: [], //Array of roll objects
+	modifier_type: 1, //Type 1: Modify total; Type 2: Modify each roll
 	roll_speed: 400, //Roll speed
 	currently_rolling: false, //Is the dice currently being rolled?
 	roll: null, //Current roll
@@ -27,11 +28,6 @@ function rollData(dice_amount, faces_amount, individual_rolls, modifier, mod_typ
 
 	// '+ N' or '- N' as a string for displaying on the page
 	this.display_modifier = (modifier >= 0) ? '+ ' + modifier.toString() : '- ' + (modifier * -1).toString();
-
-	/*
-		mod_type 1: add modifier to total result
-		mod_type 2: add modifier to each individual roll
-	*/
 }
 
 /*//////////////
@@ -40,6 +36,7 @@ Helper functions
 
 //////////////*/
 
+//Smooth Scroll to an element
 function smoothScrollTo(id, delay, speed){
 
 	window.setTimeout(function(){
@@ -52,6 +49,7 @@ function smoothScrollTo(id, delay, speed){
 
 }
 
+//Play audio file
 function playAudio(name){
 	var path = 'resources/sounds/';
 	var player = document.querySelector('#audio-player');
@@ -66,9 +64,9 @@ Data Manipulation
 
 ///////////////*/
 
+//This function is necessary to simulate the <input type='number'> up & down arrow key controls
 function incrementInputFields(direction){
 
-	//This function is necessary to simulate the <input type='number'> up & down arrow key controls
 	if( !isNaN($(document.activeElement).val()) ){
 
 		if(direction === 'up'){
@@ -84,13 +82,13 @@ function incrementInputFields(direction){
 	}
 }
 
+//Generate random integer between low and high (Including high, not including low)
 function randomNumberBetween(low, high){
-	//Generate random integer between low and high
-	//(Including high, not including low)
 	var difference = high - low;
 	return Math.ceil(Math.random() * difference) + low;
 }
 
+//Sanitize inputs
 function cleanFields(){
 	//Accept modifier that starts with '+'
 	var cleaned_modifier;
@@ -110,8 +108,8 @@ function cleanFields(){
 
 }
 
+//Generate roll shorthand with a rollData object. example: 1d20
 function getRollShorthand(){
-	//Generate roll shorthand with a rollData object. example: 1d20
 
 	var shorthand;
 	var display_mod_nospace = _r.roll.display_modifier.replace(/ /g, '');
@@ -136,6 +134,7 @@ function getRollShorthand(){
 	return shorthand;
 }
 
+
 function getFormattedIndividualRolls(rollDataItem){
 	var display_mod_nbsp = rollDataItem.display_modifier.replace(/ /g, '&nbsp;');
 	var display_mod_nospace = _r.roll.display_modifier.replace(/ /g, '');
@@ -158,10 +157,8 @@ function getFormattedIndividualRolls(rollDataItem){
 	return formatted_individual_rolls;
 }
 
+//Store roll information
 function storeDiceRoll(){
-	//Store roll information
-
-	var mod_type = 1;
 
 	//Set variables
 	var dice_amount = parseInt( $('#dice-amount').val() );
@@ -181,9 +178,9 @@ function storeDiceRoll(){
 	});
 
 	//Add modifier
-	if(mod_type === 1){
+	if(_r.modifier_type === 1){
 		result += modifier;
-	}else if(mod_type === 2){
+	}else if(_r.modifier_type === 2){
 		result += modifier * dice_amount;
 	}
 
@@ -193,7 +190,7 @@ function storeDiceRoll(){
 		faces_amount,
 		individual_rolls,
 		modifier,
-		mod_type,
+		_r.modifier_type,
 		result);
 
 	_r.roll_history.push(currentRoll);
@@ -206,8 +203,8 @@ DOM Manipulation
 
 //////////////*/
 
+//Hide sections that don't need to be shown (such as individual rolls for a single die)
 function hideIrrelevantSections(){
-	//Hide sections that don't need to be shown (such as individual rolls for a single die)
 
 	function showAllSections(){
 		$('.individual-rolls').css('display', 'inline-block');
@@ -226,6 +223,7 @@ function hideIrrelevantSections(){
 	}
 }
 
+//Force Result to stay fixed on screen even when user scrolls past it
 function keepResultVisible(){
 
 	var distanceFromRight = ( $(window).width() - $('main').width() ) / 2;
@@ -240,8 +238,8 @@ function keepResultVisible(){
 	}
 }
 
+//Display Roll Results on the screen
 function displayRollResult(){
-	//Display Roll Results on the screen
 
 	function updateData(){
 		hideIrrelevantSections();
@@ -267,6 +265,7 @@ function displayRollResult(){
 		}, _r.roll_speed );
 }
 
+//Log data to Roll History
 function logToRollHistoryWindow(rollDataItem){
 	var li = document.createElement('li');
 	var roll_shorthand = document.createElement('div');
@@ -287,6 +286,7 @@ function logToRollHistoryWindow(rollDataItem){
 
 }
 
+//Open overlay and window
 function openOverlay(){
 	$('.overlay').css('display', 'block');
 
@@ -295,6 +295,7 @@ function openOverlay(){
 	}, 10);
 }
 
+//Close overlay and window
 function closeOverlay(){
 	$('.overlay').addClass('closed');
 
