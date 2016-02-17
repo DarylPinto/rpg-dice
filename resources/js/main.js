@@ -101,9 +101,19 @@ function cleanFields(){
 
 	$('#modifier').val(cleaned_modifier);
 
-	//Replace empty fields with 0
+	
+	var field_max = 250;
 	['#dice-amount', '#faces-amount', '#modifier'].forEach(function(el){
-		($(el).val().length === 0) ? $(el).val('0') : $(el).val();
+		var original_val = $(el).val();
+ 
+		//If input is a number and is > field_max, cap it off at field_max
+		//(field_max is arbitrary, but limit must be set to prevent browser crash)
+		if ( !isNaN( parseInt(original_val) ) && parseInt(original_val) > field_max ){
+			$(el).val(field_max);
+		}
+
+		//Replace empty fields with 0
+		if (original_val.length === 0) $(el).val('0');
 	});
 
 }
